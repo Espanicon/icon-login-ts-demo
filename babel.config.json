@@ -8,6 +8,6 @@
         "corejs": "3.26"
       }
     ],
-    "@babel/preset-react"
+    ["@babel/preset-react", { "runtime": "automatic" }]
   ]
 }

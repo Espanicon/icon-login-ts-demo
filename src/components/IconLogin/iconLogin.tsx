@@ -12,16 +12,16 @@ import "@fontsource/lato";
 import styles from "./iconLogin.module.css";
 
 // import images not necessary when building with NEXTjs
-// import cancelImg from "./cancel-logo.svg";
-// import hanaImg from "./hana-logo.jpg";
-// import iconImg from "./icon-logo.png";
-// import ledgerImg from "./ledger-logo.png";
+import cancelImg from "./images/cancel-logo.svg";
+import hanaImg from "./images/hana-logo.jpg";
+import iconImg from "./images/icon-logo.png";
+import ledgerImg from "./images/ledger-logo.png";
 
 // variables
-const cancelImg = "images/cancel-logo.png";
-const iconImg = "images/icon-logo.png";
-const ledgerImg = "images/ledger-logo.png";
-const hanaImg = "images/hana-logo.jpg";
+/* const cancelImg = "images/cancel-logo.png"; */
+/* const iconImg = "images/icon-logo.png"; */
+/* const ledgerImg = "images/ledger-logo.png"; */
+/* const hanaImg = "images/hana-logo.jpg"; */
 
 // for accesibility purposes
 Modal.setAppElement("body");
