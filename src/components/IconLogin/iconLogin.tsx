@@ -9,7 +9,7 @@ import lib from "./utils/lib";
 const { getIcxBalance } = lib;
 
 import "@fontsource/lato";
-import styles from "./LoginModal.module.css";
+import styles from "./iconLogin.module.css";
 
 // import images not necessary when building with NEXTjs
 // import cancelImg from "./cancel-logo.svg";
@@ -18,6 +18,10 @@ import styles from "./LoginModal.module.css";
 // import ledgerImg from "./ledger-logo.png";
 
 // variables
+const cancelImg = "images/cancel-logo.png";
+const iconImg = "images/icon-logo.png";
+const ledgerImg = "images/ledger-logo.png";
+const hanaImg = "images/hana-logo.jpg";
 
 // for accesibility purposes
 Modal.setAppElement("body");
@@ -74,7 +78,7 @@ async function retrieveICONLedgerAddresses(count = 20) {
   }
 }
 
-function getLoginDataInitState() {
+function getLoginDataInitState(): { [index: string]: any } {
   // initialize loginData
   // after user login the following set of data will be
   // passed to parent component
@@ -86,7 +90,12 @@ function getLoginDataInitState() {
   };
 }
 
-function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
+type IconLoginType = {
+  onRequestClose: any;
+  onRetrieveData: any;
+  isOpen: boolean;
+};
+function IconLogin({ onRequestClose, onRetrieveData, isOpen }: IconLoginType) {
   // Modal window for login with ICON.
   // This is a stateless component, the OPEN/CLOSE state is
   // controlled by the parent state
@@ -120,7 +129,7 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
     onRequestClose();
   }
 
-  function handleLoginData(newLoginData) {
+  function handleLoginData(newLoginData: any) {
     // updates local loginData state and sends loginData to parent component
     setLoginData(newLoginData);
     onRetrieveData(newLoginData);
@@ -137,9 +146,9 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
     );
   }
 
-  async function getWalletsBalance(wallets) {
+  async function getWalletsBalance(wallets: any) {
     // get the ICX balance of a list of wallets
-    let walletsBalance = [];
+    const walletsBalance: any = [];
     for (const wallet of wallets) {
       let balance = await getIcxBalance(wallet.icxAddress);
       walletsBalance.push(balance);
@@ -153,7 +162,7 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
     // open ledger modal window and show 'connecting' animation
     setLedgerModalOn(true);
     setLedgerModalIsWaiting(true);
-    let ledgerWallets = [];
+    let ledgerWallets: any = [];
 
     const ledgerAddresses = await retrieveICONLedgerAddresses();
     // const ledgerAddresses = MOCK_DATA; // for testing purposes
@@ -178,22 +187,24 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
     setLedgerModalIsWaiting(false);
   }
 
-  function onSelectLedgerWallet(walletIndex) {
+  function onSelectLedgerWallet(walletIndex: any) {
     // user selected a ledger wallet but havent click 'cancel' or 'select' button
 
     // set state of selected wallet
     setIndexOfLedgerAddressSelected(walletIndex);
 
     // set wallet info on loginData
-    let newLoginData = loginData;
-    newLoginData.selectedWallet = ledgerAddressesState[walletIndex].icxAddress;
-    newLoginData.bip44Path = ledgerAddressesState[walletIndex].bip44Path;
+    const newLoginData: any = loginData;
+    newLoginData.selectedWallet = ledgerAddressesState![walletIndex][
+      "icxAddress"
+    ];
+    newLoginData.bip44Path = ledgerAddressesState![walletIndex]["bip44Path"];
     setLoginData(newLoginData);
   }
 
   function handleLedgerWalletSelect() {
     // user selected a ledger wallet and clicked "select" button
-    let newLoginData = loginData;
+    const newLoginData: any = loginData;
     newLoginData.methodUsed = LOGIN_METHODS.ledger;
     newLoginData.successfulLogin = true;
 
@@ -209,14 +220,14 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
     const blankLoginData = getLoginDataInitState();
 
     // reset login data back to initial values
-    for (let label in loginData) {
+    for (const label in loginData) {
       loginData[label] = blankLoginData[label];
     }
     closeLedgerModal();
   }
 
   useEffect(() => {
-    function iconexRelayResponseEventHandler(evnt) {
+    function iconexRelayResponseEventHandler(evnt: any) {
       const { type, payload } = evnt.detail;
       const localLoginData = getLoginDataInitState();
 
@@ -257,7 +268,6 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
         iconexRelayResponseEventHandler
       );
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -279,12 +289,10 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
             </div>
             <div className={styles.bodySectionItem}>
               <span className={styles.bodySectionItemImg}>
-                {/* <img alt="" src={iconImg} /> */}
-                <img alt="" src="images/icon-logo.png" />
+                <img alt="" src={iconImg} />
               </span>
               <span className={styles.bodySectionItemImg}>
-                {/* <img alt="" src={hanaImg} /> */}
-                <img alt="" src="images/hana-logo.jpg" />
+                <img alt="" src={hanaImg} />
               </span>
             </div>
           </div>
@@ -295,8 +303,7 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
             </div>
             <div className={styles.bodySectionItem}>
               <span className={styles.bodySectionItemImg}>
-                {/* <img alt="" src={ledgerImg} /> */}
-                <img alt="" src="images/ledger-logo.png" />
+                <img alt="" src={ledgerImg} />
               </span>
             </div>
           </div>
@@ -314,8 +321,7 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
           <div className={styles.ledger}>
             <div className={styles.ledgerSection}>
               <img
-                // src={iconImg}
-                src="images/icon-logo.png"
+                src={iconImg}
                 className={styles.ledgerLogo}
                 alt="icon logo"
               />
@@ -326,35 +332,37 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
           <div className={styles.ledger}>
             <div className={styles.ledgerSection}>
               <div className={styles.ledgerSectionWallet}>
-                {ledgerAddressesState.map((wallet, index) => {
-                  return (
-                    <div
-                      className={
-                        indexOfLedgerAddressSelected === index
-                          ? `${styles.ledgerSectionWalletSection} ${styles.ledgerAddressSelected}`
-                          : `${styles.ledgerSectionWalletSection}`
-                      }
-                      key={uuidv4()}
-                      onClick={() => onSelectLedgerWallet(index)}
-                    >
-                      <div className={styles.ledgerSectionWalletIndex}>
-                        <p>{index + 1}</p>
-                      </div>
-                      <div className={styles.ledgerSectionWalletContent}>
-                        <div className={styles.ledgerSectionWalletAddress}>
-                          <p>{wallet.icxAddress}</p>
+                {((ledgerAddressesState as unknown) as any[]).map(
+                  (wallet, index) => {
+                    return (
+                      <div
+                        className={
+                          indexOfLedgerAddressSelected === index
+                            ? `${styles.ledgerSectionWalletSection} ${styles.ledgerAddressSelected}`
+                            : `${styles.ledgerSectionWalletSection}`
+                        }
+                        key={uuidv4()}
+                        onClick={() => onSelectLedgerWallet(index)}
+                      >
+                        <div className={styles.ledgerSectionWalletIndex}>
+                          <p>{index + 1}</p>
                         </div>
-                        <div className={styles.ledgerSectionWalletBalance}>
-                          {walletsIcxBalance == null ? (
-                            <p>Balance: -.- ICX</p>
-                          ) : (
-                            <p>Balance: {walletsIcxBalance[index]} ICX</p>
-                          )}
+                        <div className={styles.ledgerSectionWalletContent}>
+                          <div className={styles.ledgerSectionWalletAddress}>
+                            <p>{wallet.icxAddress}</p>
+                          </div>
+                          <div className={styles.ledgerSectionWalletBalance}>
+                            {walletsIcxBalance == null ? (
+                              <p>Balance: -.- ICX</p>
+                            ) : (
+                              <p>Balance: {walletsIcxBalance[index]} ICX</p>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  }
+                )}
               </div>
               <div className={styles.ledgerSectionContainerBtn}>
                 <button onClick={handleLedgerWalletCancel}>Cancel</button>
@@ -366,8 +374,7 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
           <div className={styles.ledger}>
             <div className={styles.ledgerSection}>
               <img
-                // src={cancelImg}
-                src="images/cancel-logo.png"
+                src={cancelImg}
                 className={styles.ledgerLogo}
                 alt="icon logo"
               />
@@ -383,4 +390,4 @@ function LoginModal({ onRequestClose, onRetrieveData, isOpen, ...props }) {
   );
 }
 
-export default LoginModal;
+export default IconLogin;

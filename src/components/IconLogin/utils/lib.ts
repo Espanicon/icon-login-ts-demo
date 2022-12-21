@@ -5,7 +5,7 @@ const customRequest = require("./customRequest");
 const SCORES = require("./scores");
 
 // General Functions
-function makeJSONRPCRequestObj(method) {
+function makeJSONRPCRequestObj(method: string) {
   return {
     jsonrpc: "2.0",
     method: method,
@@ -13,7 +13,7 @@ function makeJSONRPCRequestObj(method) {
   };
 }
 
-function hexToDecimal(hex) {
+function hexToDecimal(hex: string) {
   return parseInt(hex, 16);
 }
 
@@ -21,15 +21,15 @@ function hexToDecimal(hex) {
 //   return "0x" + number.toString(16);
 // }
 
-function fromHexInLoop(loopInHex) {
-  let loopInBase2 = hexToDecimal(loopInHex);
+function fromHexInLoop(loopInHex: string) {
+  const loopInBase2 = hexToDecimal(loopInHex);
   return loopInBase2 / 10 ** 18;
 }
 
 // SCORE methods
 //
 // Governance methods
-async function getIcxBalance(address, decimals = 2) {
+async function getIcxBalance(address: string, decimals = 2) {
   const JSONRPCObject = JSON.stringify({
     ...makeJSONRPCRequestObj("icx_getBalance"),
     params: {

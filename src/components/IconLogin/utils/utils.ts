@@ -27,7 +27,11 @@ export function getInitLocalData() {
   };
 }
 
-export function validationResponse(isValid, key = null, value = null) {
+export function validationResponse(
+  isValid: any,
+  key: any = null,
+  value: any = null
+) {
   return {
     isValid: isValid,
     key: key,
@@ -35,12 +39,12 @@ export function validationResponse(isValid, key = null, value = null) {
   };
 }
 
-export function deepMergeObjects(oldObj, newObj) {
-  let mergedObj = {};
+export function deepMergeObjects(oldObj: any, newObj: any) {
+  const mergedObj: any = {};
   const keys = Object.keys(oldObj);
   const newKeys = Object.keys(newObj);
 
-  for (let key of keys) {
+  for (const key of keys) {
     mergedObj[key] = oldObj[key];
     if (newKeys.includes(key)) {
       mergedObj[key] = newObj[key];
@@ -61,7 +65,6 @@ export function deepMergeObjects(oldObj, newObj) {
         } else {
           // mergedObj[key] = oldObj[key];
         }
-      } else {
       }
     }
   }
@@ -69,11 +72,11 @@ export function deepMergeObjects(oldObj, newObj) {
   return mergedObj;
 }
 
-export function getLocalData(fileKey) {
+export function getLocalData(fileKey: string) {
   // get data saved locally in user pc
   try {
-    const data = JSON.parse(window.localStorage.getItem(fileKey));
-    let mergedData = deepMergeObjects(getInitLocalData(), data);
+    const data = JSON.parse(window.localStorage.getItem(fileKey)!);
+    const mergedData = deepMergeObjects(getInitLocalData(), data);
     // console.log("Reading local Data");
     // console.log("Checking validation of local data");
     // console.log("Local data:");
@@ -96,7 +99,7 @@ export function getLocalData(fileKey) {
   }
 }
 
-export function saveDataToLocal(data, fileKey) {
+export function saveDataToLocal(data: any, fileKey: any) {
   const localData = getLocalData(fileKey);
   // console.log("Validating data before saving to local");
   // console.log("LocalData:");
@@ -123,11 +126,11 @@ export function saveDataToLocal(data, fileKey) {
   }
 }
 
-export function validateLocalData(newData) {
+export function validateLocalData(newData: any) {
   // Validates data saved to local client computer
 
   // so far only validating newData.auth
-  const data = { ...newData.auth };
+  const data: any = { ...newData.auth };
 
   const dataKeys = Object.keys(data);
   const arrayOfKeys = [

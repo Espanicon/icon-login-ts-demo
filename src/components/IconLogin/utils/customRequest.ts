@@ -7,4 +7,3 @@ import SDK from "@espanicon/espanicon-sdk";
 
 const foo = new SDK();
 export const customRequest = foo.queryMethod;
-// export = customRequest;
